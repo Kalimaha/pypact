@@ -1,6 +1,10 @@
 from pact_test.exceptions import PactTestException
 
 
+MISSING_PACT_URI = 'Missing setup for "pact_uri" at '
+MISSING_HAS_PACT_WITH = 'Missing setup for "has_pact_with" at '
+
+
 class ServiceConsumerTest(object):
     pact_uri = None
     has_pact_with = None
@@ -14,9 +18,11 @@ class ServiceConsumerTest(object):
 
     def is_valid(self):
         if self.pact_uri is None:
-            raise PactTestException('Missing setup for "pact_uri".')
+            msg = MISSING_PACT_URI + __file__
+            raise PactTestException(msg)
         if self.has_pact_with is None:
-            raise PactTestException('Missing setup for "has_pact_with".')
+            msg = MISSING_HAS_PACT_WITH + __file__
+            raise PactTestException(msg)
 
 
 def pact_uri(pact_uri_value):

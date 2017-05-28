@@ -1,3 +1,4 @@
+import os
 import pytest
 from pact_test.exceptions import PactTestException
 from pact_test.models.service_consumer_test import state
@@ -68,7 +69,7 @@ def test_missing_pact_uri():
 
     with pytest.raises(PactTestException) as e:
         MyTest().is_valid()
-    assert str(e.value) == 'Missing setup for "pact_uri".'
+    assert str(e.value).startswith('Missing setup for "pact_uri"')
 
 
 def test_missing_has_pact_with():
@@ -80,4 +81,4 @@ def test_missing_has_pact_with():
 
     with pytest.raises(PactTestException) as e:
         MyTest().is_valid()
-    assert str(e.value) == 'Missing setup for "has_pact_with".'
+    assert str(e.value).startswith('Missing setup for "has_pact_with"')

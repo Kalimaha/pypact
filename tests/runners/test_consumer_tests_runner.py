@@ -1,9 +1,10 @@
 import os
 import sys
+import imp
 import pytest
-from pact_test.runners.consumer_tests_runner import ConsumerTestsRunner
 from pact_test.config.config_builder import Config
 from pact_test.exceptions import PactTestException
+from pact_test.runners.consumer_tests_runner import ConsumerTestsRunner
 
 
 def test_missing_pact_helper():
@@ -76,6 +77,19 @@ def test_collect_tests():
     state = next(test.states)
     assert state.state == 'the breakfast is available'
     assert state() == 'Spam & Eggs'
+
+
+def test_invalid_test():
+    path = os.path.join(os.getcwd(), 'tests', 'resources',
+                        'invalid_service_consumer', 'customer.py')
+    module = imp.load_source('invalid_test', path)
+    test = module.TestRestaurantCustomer
+
+    t = ConsumerTestsRunner(None)
+
+    with pytest.raises(PactTestException) as e:
+        t.verify_test(test)
+    assert str(e.value).startswith('Missing setup for "has_pact_with"')
 
 
 def remove_pact_helper():

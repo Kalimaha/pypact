@@ -4,6 +4,12 @@ import inspect
 from pact_test.exceptions import PactTestException
 
 
+MISSING_PACT_HELPER = 'Missing "pact_helper.py" at "'
+MISSING_TESTS = 'There are no consumer tests to verify.'
+MISSING_SETUP = 'Missing "setup" method in "pact_helper.py".'
+MISSING_TEAR_DOWN = 'Missing "tear_down" method in "pact_helper.py".'
+
+
 class ConsumerTestsRunner(object):
     pact_helper = None
 
@@ -11,6 +17,15 @@ class ConsumerTestsRunner(object):
         self.config = config
 
     def verify(self):
+        pass
+
+    def verify_test(self, test_class):
+        test = test_class()
+        test.is_valid()
+        print(test.pact_uri)
+        pact = self.get_pact(test.pact_uri)
+
+    def get_pact(self, pact_uri):
         pass
 
     def collect_tests(self):
@@ -27,7 +42,7 @@ class ConsumerTestsRunner(object):
                         tests.append(obj)
 
         if not files:
-            raise PactTestException('There are no consumer tests to verify.')
+            raise PactTestException(MISSING_TESTS)
         return tests
 
     def all_files(self):
@@ -36,14 +51,14 @@ class ConsumerTestsRunner(object):
     def load_pact_helper(self):
         self.pact_helper = imp.load_source('pact_helper', self.path_to_pact_helper())
         if hasattr(self.pact_helper, 'setup') is False:
-            raise PactTestException('Missing "setup" method in "pact_helper.py".')
+            raise PactTestException(MISSING_SETUP)
         if hasattr(self.pact_helper, 'tear_down') is False:
-            raise PactTestException('Missing "tear_down" method in "pact_helper.py".')
+            raise PactTestException(MISSING_TEAR_DOWN)
 
     def path_to_pact_helper(self):
         path = os.path.join(self.config.consumer_tests_path, 'pact_helper.py')
         if os.path.isfile(path) is False:
-            msg = 'Missing "pact_helper.py" at "' + self.config.consumer_tests_path + '".'
+            msg = MISSING_PACT_HELPER + self.config.consumer_tests_path + '".'
             raise PactTestException(msg)
         return path
 
