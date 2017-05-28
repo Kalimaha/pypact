@@ -16,7 +16,7 @@ class ServiceConsumerTest(object):
             if callable(obj) and hasattr(obj, 'state'):
                 yield obj
 
-    def is_valid(self):
+    def validate(self):
         if self.pact_uri is None:
             msg = MISSING_PACT_URI + __file__
             raise PactTestException(msg)

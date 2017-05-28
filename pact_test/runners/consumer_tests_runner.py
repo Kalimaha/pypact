@@ -2,12 +2,14 @@ import os
 import imp
 import inspect
 from pact_test.exceptions import PactTestException
+from pact_test.utils.pact_utils import get_pact
 
 
 MISSING_PACT_HELPER = 'Missing "pact_helper.py" at "'
 MISSING_TESTS = 'There are no consumer tests to verify.'
 MISSING_SETUP = 'Missing "setup" method in "pact_helper.py".'
 MISSING_TEAR_DOWN = 'Missing "tear_down" method in "pact_helper.py".'
+MISSING_STATE = 'Missing implementation for state '
 
 
 class ConsumerTestsRunner(object):
@@ -21,12 +23,33 @@ class ConsumerTestsRunner(object):
 
     def verify_test(self, test_class):
         test = test_class()
-        test.is_valid()
-        print(test.pact_uri)
+        test.validate()
         pact = self.get_pact(test.pact_uri)
 
-    def get_pact(self, pact_uri):
+        pact_states = list(map(lambda i: i['providerState'], pact['interactions']))
+        test_states = list(map(lambda s: s.state, test.states))
+
+        for pact_state in pact_states:
+            if pact_state not in test_states:
+                msg = MISSING_STATE + '"' + pact_state + '".'
+                raise PactTestException(msg)
+            self.verify_state(test.states, pact_state)
+
+    def verify_state(self, states, provider_state):
+        # for s in states:
+        #     print('\t' + s.state)
+        # print(providerState)
+        # print('PACT HELPER SETUP')
+        # print('EXECUTE STATE')
+        # print('CREATE REQUEST')
+        # print('EXECUTE REQUEST')
+        # print('VERIFY RESPONSE')
+        # print('PACT HELPER TEAR DOWN')
         pass
+
+    @staticmethod
+    def get_pact(location):         # pragma: no cover
+        return get_pact(location)   # pragma: no cover
 
     def collect_tests(self):
         root = self.config.consumer_tests_path

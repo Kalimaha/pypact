@@ -1,6 +1,7 @@
 import os
 import sys
 import imp
+import json
 import pytest
 from pact_test.config.config_builder import Config
 from pact_test.exceptions import PactTestException
@@ -90,6 +91,43 @@ def test_invalid_test():
     with pytest.raises(PactTestException) as e:
         t.verify_test(test)
     assert str(e.value).startswith('Missing setup for "has_pact_with"')
+
+
+def test_verify_missing_state(mocker):
+    def pact_content(_):
+        s = '{"interactions": [{"providerState": "My State"}]}'
+        return json.loads(s)
+
+    path = os.path.join(os.getcwd(), 'tests', 'resources',
+                        'service_consumers', 'test_restaurant_customer.py')
+    module = imp.load_source('consumer_test', path)
+    test = module.TestRestaurantCustomer
+
+    t = ConsumerTestsRunner(None)
+    mocker.patch.object(t, 'get_pact', new=pact_content)
+
+    with pytest.raises(PactTestException) as e:
+        t.verify_test(test)
+    assert str(e.value) == 'Missing implementation for state "My State".'
+
+
+def test_verify_existing_state(mocker):
+    def pact_content(_):
+        s = '{"interactions": [{"providerState": ' \
+            '"the breakfast is available"}]}'
+        return json.loads(s)
+
+    path = os.path.join(os.getcwd(), 'tests', 'resources',
+                        'service_consumers', 'test_restaurant_customer.py')
+    module = imp.load_source('consumer_test', path)
+    test = module.TestRestaurantCustomer
+
+    t = ConsumerTestsRunner(None)
+    mocker.patch.object(t, 'get_pact', new=pact_content)
+    mocker.spy(t, 'verify_state')
+
+    t.verify_test(test)
+    assert t.verify_state.call_count == 1
 
 
 def remove_pact_helper():

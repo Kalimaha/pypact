@@ -68,7 +68,7 @@ def test_missing_pact_uri():
             return 42
 
     with pytest.raises(PactTestException) as e:
-        MyTest().is_valid()
+        MyTest().validate()
     assert str(e.value).startswith('Missing setup for "pact_uri"')
 
 
@@ -80,5 +80,5 @@ def test_missing_has_pact_with():
             return 42
 
     with pytest.raises(PactTestException) as e:
-        MyTest().is_valid()
+        MyTest().validate()
     assert str(e.value).startswith('Missing setup for "has_pact_with"')
