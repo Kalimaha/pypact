@@ -1,8 +1,8 @@
 import json
-try:
-    from urllib.request import urlopen
-except ImportError:
-    from urllib import urlopen
+try:                                    # pragma: no cover
+    from urllib.request import urlopen  # pragma: no cover
+except ImportError:                     # pragma: no cover
+    from urllib import urlopen          # pragma: no cover
 
 
 def get_pact(location):

@@ -1,8 +1,5 @@
+from pact_test.constants import *
 from pact_test.exceptions import PactTestException
-
-
-MISSING_PACT_URI = 'Missing setup for "pact_uri" at '
-MISSING_HAS_PACT_WITH = 'Missing setup for "has_pact_with" at '
 
 
 class ServiceConsumerTest(object):

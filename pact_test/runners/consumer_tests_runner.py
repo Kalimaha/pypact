@@ -1,15 +1,9 @@
 import os
 import imp
 import inspect
+from pact_test.constants import *
 from pact_test.exceptions import PactTestException
 from pact_test.utils.pact_utils import get_pact
-
-
-MISSING_PACT_HELPER = 'Missing "pact_helper.py" at "'
-MISSING_TESTS = 'There are no consumer tests to verify.'
-MISSING_SETUP = 'Missing "setup" method in "pact_helper.py".'
-MISSING_TEAR_DOWN = 'Missing "tear_down" method in "pact_helper.py".'
-MISSING_STATE = 'Missing implementation for state '
 
 
 class ConsumerTestsRunner(object):
