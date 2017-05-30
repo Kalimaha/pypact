@@ -6,15 +6,7 @@
     :target: https://travis-ci.org/Kalimaha/pact-test
 .. image:: https://coveralls.io/repos/github/Kalimaha/pact-test/badge.svg?branch=development
     :target: https://coveralls.io/github/Kalimaha/pact-test?branch=development
-.. image:: https://img.shields.io/badge/python-2.7-blue.svg
-    :target: https://travis-ci.org/Kalimaha/pact-test
-.. image:: https://img.shields.io/badge/python-3.3-blue.svg
-    :target: https://travis-ci.org/Kalimaha/pact-test
-.. image:: https://img.shields.io/badge/python-3.4-blue.svg
-    :target: https://travis-ci.org/Kalimaha/pact-test
-.. image:: https://img.shields.io/badge/python-3.5-blue.svg
-    :target: https://travis-ci.org/Kalimaha/pact-test
-.. image:: https://img.shields.io/badge/python-3.6-blue.svg
+.. image:: https://img.shields.io/badge/python-2.7,%203.3,%203.4,%203.5,%203.6-blue.svg
     :target: https://travis-ci.org/Kalimaha/pact-test
 
 Pact Test for Python
