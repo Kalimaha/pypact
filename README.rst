@@ -1,6 +1,6 @@
 .. image:: https://img.shields.io/badge/python-2.7,%203.3,%203.4,%203.5,%203.6-blue.svg
     :target: https://travis-ci.org/Kalimaha/pact-test
-.. image:: https://img.shields.io/pypi/v/nine.svg
+.. image:: https://img.shields.io/badge/pypi-0.1.1-blue.svg
     :target: https://pypi.python.org/pypi?:action=display&name=pact-test&version=0.1.1
 .. image:: https://img.shields.io/pypi/wheel/Django.svg
     :target: https://pypi.python.org/pypi?:action=display&name=pact-test&version=0.1.1
