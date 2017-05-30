@@ -1,3 +1,7 @@
+.. image:: https://img.shields.io/pypi/v/nine.svg
+    :target: https://pypi.python.org/pypi?:action=display&name=pact-test&version=0.1.1
+.. image:: https://img.shields.io/pypi/wheel/Django.svg
+    :target: https://pypi.python.org/pypi?:action=display&name=pact-test&version=0.1.1
 .. image:: https://travis-ci.org/Kalimaha/pact-test.svg?branch=master
     :target: https://travis-ci.org/Kalimaha/pact-test
 .. image:: https://coveralls.io/repos/github/Kalimaha/pact-test/badge.svg?branch=development
